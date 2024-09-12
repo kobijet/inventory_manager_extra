@@ -1,0 +1,26 @@
+[
+    {
+        "id": 0,
+        "name": "Kobi Rogers",
+        "username": "kobijet",
+        "email": "kobijet@workplace.com",
+        "password": "supersecret1",
+        "role": "admin"
+    },
+    {
+        "id": 1,
+        "name": "Viewer Profile",
+        "username": "viewer",
+        "email": "viewer@workplace.com",
+        "password": "supersecret1",
+        "role": "viewer"
+    },
+    {
+        "id": 2,
+        "name": "Editor Profile",
+        "username": "editor",
+        "email": "editor@workplace.com",
+        "password": "supersecret1",
+        "role": "editor"
+    }
+]
