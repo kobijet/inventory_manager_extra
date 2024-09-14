@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Outlet, useLoaderData } from 'react-router-dom';
+import { Outlet, useLoaderData, useRevalidator } from 'react-router-dom';
 import axios from 'axios';
 import InventoryItem from './InventoryItem';
 import './inventory.css';
@@ -7,47 +7,76 @@ import './inventory.css';
 const Inventory = () => {
     let data = useLoaderData();
 
+    const revalidator = useRevalidator();
+
     const [errorMessage, setErrorMessage] = useState('');
     const [inventory, setInventory] = useState();
 
+    let name = "";
+    const setName = (itemName) => {
+        name = String(itemName);
+    }
+    let category = "";
+    const setCategory = (itemCategory) => {
+        category = String(itemCategory);
+    }
+    let qtyres = -1;
+    const setQtyres = (itemQtyres) => {
+        qtyres = parseInt(itemQtyres);
+    }
+    let qty = -1;
+    const setQty = (itemQty) => {
+        qty = parseInt(itemQty);
+    }
+    let price = -1.0;
+    const setPrice = (itemPrice) => {
+        price = parseFloat(itemPrice);
+    }
+
+    const InventoryEditItem = ({ item }) => {
+        
+        // Set initial values
+        setName(item.name);
+        setCategory(item.category);
+        setQtyres(item.qtyres);
+        setQty(item.qty);
+        setPrice(item.price);
+
+        return (
+            <>
+                <p className="item-id">{item.id}</p>
+                <div className="short-field">
+                    <p>
+                        <input type="text" defaultValue={String(item.name)} onChange={(element) => setName(element.target.value)}/>
+                    </p>
+                    <p>
+                        <input type="text" defaultValue={String(item.category)} onChange={(element) => setCategory(element.target.value)}/>
+                    </p>
+                </div>
+                <div className="short-field">
+                    <p>
+                        Res: 
+                        <input type="text" defaultValue={item.qtyres} onChange={(element) => setQtyres(element.target.value)}/>
+                    </p>
+                    <p>
+                        Qty: 
+                        <input type="text" defaultValue={item.qty} onChange={(element) => setQty(element.target.value)}/>
+                    </p>
+                </div>
+                <p>
+                    $<input type="number" step="0.01" defaultValue={String(item.price)} onChange={(element) => setPrice(element.target.value)}/>/ea.
+                </p>
+                <button type="button" onClick={() => handleDelete(item.id)}>Delete</button>
+            </>
+        );
+    }
+
     let editMode = false;
-
-    const [name, setName] = useState();
-    function handleSetName(e) { setName(e); console.log(name); }
-
-    const [category, setCategory] = useState();
-    function handleSetCategory(e) { setCategory(e.target.value); }
-
-    const [qty, setQty] = useState();
-    function handleSetQty(e) { setQty(e.target.value); }
-
-    const [qtyres, setQtyres] = useState();
-    function handleSetQtyres(e) { setQtyres(e.target.value); }
-
-    const [price, setPrice] = useState();
-    function handleSetPrice(e) { setPrice(e.target.value); }
 
     const config = {
         headers: {
             authorization: localStorage.getItem("accessToken")
         }
-    }
-
-    const InventoryEditItem = ({item}) => {
-        return (
-            <>
-                <p className="item-id">{item.id}</p>
-                <div className="short-field">
-                    <p><input type="text" defaultValue={item.name} /></p>
-                    <p><input type="text" defaultValue={item.category} /></p>
-                </div>
-                <div className="short-field">
-                    <p><input type="text" defaultValue={item.qtyres} /></p>
-                    <p><input type="text" defaultValue={item.qty} /></p>
-                </div>
-                <p className="short-field">$<input type="number" step="0.01" defaultValue={item.price} />/ea.</p>
-            </>
-        );
     }
 
     const renderInventory = () => {
@@ -76,6 +105,11 @@ const Inventory = () => {
         if (editMode === true)
         {
             if (data !== null) {
+
+                // When editMode is enabled:
+                // Render inventory,
+                // Replace the list item with corresponding id with an edit field
+                // Render other inventory items
                 data
                 .map((item) => {
                     if (item.id === id) {
@@ -91,12 +125,16 @@ const Inventory = () => {
                     inventoryItems.push(
                         <li className="item" id={item.id} key={item.id}>
                             <InventoryItem item={item} />
-                            <button type="button" onClick={() => handleEdit(item.id)}>Edit</button>
                         </li>
                     );
                 });
             }
+
+            setInventory(inventoryItems);
         } else {
+            // When edit mode is disabled:
+            // Patch inventory item with id with data,
+            // Re-render inventory
             axios.patch('http://localhost:3030/inventory/' + id, {
                 name: name,
                 category: category,
@@ -116,18 +154,21 @@ const Inventory = () => {
                 setErrorMessage(error.response.data.error);
             });
 
-            inventoryItems = renderInventory();
+            // Re-render inventory when enabling edit mode,
+            // Refresh page to update inventory edits
+            window.location.reload();
         }
 
-        setInventory(inventoryItems);
+        
     }
 
-    const handleDelete = (e) => {
-        axios.delete('http://localhost:3030/inventory/' + e, config)
+    const handleDelete = (id) => {
+        axios.delete('http://localhost:3030/inventory/' + id, config)
         .then((response) =>{
             // Handle success
             if (response.status === 200) {
                 console.log(response.data.message);
+                window.location.reload();
             }
         })
         .catch((error) => {

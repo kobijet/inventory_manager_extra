@@ -1,6 +1,7 @@
 /* Inventory component */
 #inventory-component, #inventory-alerts-component {
     margin-top: 1rem;
+    min-width: 45rem;
 }
 
 #inventory-component h2, #inventory-alerts-component h2, #inventory-alerts-component h3{
@@ -37,4 +38,8 @@
 #inventory-component .short-field, #inventory-alerts-component .short-field {
     flex: 1;
     min-width: 5rem;
+}
+
+#inventory-component input {
+    width: 8rem;
 }

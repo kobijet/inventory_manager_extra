@@ -32,7 +32,7 @@ const ItemSchema = zod.object({
     name: zod.string().min(1, { message: 'Item name cannot be empty.' }),
     category: zod.string().min(1, { message: 'Item category cannot be empty.' }),
     qty: zod.number().nonnegative({ message: 'Quantity cannot be negative.' }),
-    qtyres: zod.number().nonnegative({ message: 'Reservations cannot be negative.' }),
+    qtyres: zod.number().nonnegative({ message: 'Reservations cannot be negative.' }).optional(),
     price: zod.number().nonnegative({ message: 'Price cannot be negative.' })
 });
 
@@ -165,7 +165,7 @@ api.patch("/inventory/:itemId", (req, res) => {
         // Validate that item inputted matches item schema, return error messages otherwise
         const PartialItem = ItemSchema.partial();
         const schema = PartialItem.safeParse(req.body);
-        console.log(req.body);
+
         if (!schema.success) {
             let errorMessage = "";
             schema.error.errors.map((err) => {
@@ -174,7 +174,7 @@ api.patch("/inventory/:itemId", (req, res) => {
             return res.status(401).json({error: errorMessage });
         }
 
-        //db.query(`UPDATE inventory SET name="${req.body.name}", category="${req.body.category}", qty=${req.body.qty}, qtyres=${req.body.qtyres}, price=${req.body.price} WHERE id=${matchingItem[0].id}`);
+        db.query(`UPDATE inventory SET name="${req.body.name}", category="${req.body.category}", qty=${req.body.qty}, qtyres=${req.body.qtyres}, price=${req.body.price} WHERE id=${matchingItem[0].id}`);
         res.status(200).json({ message: `Item updated: ID: ${matchingItem[0].id}` }).send();
     });
 })
