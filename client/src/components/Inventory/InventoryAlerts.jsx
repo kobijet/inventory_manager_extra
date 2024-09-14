@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import { Outlet, useLoaderData } from 'react-router-dom';
-import InventoryItem from './Inventory/InventoryItem';
+import InventoryItem from './InventoryItem';
+import './inventory.css';
 
 const InventoryAlerts = () => {
     const data = useLoaderData();
@@ -13,7 +14,7 @@ const InventoryAlerts = () => {
     })
     .map((item) => {
         outOfStockItems.push(
-            <li key={item.id}>
+            <li className="item" key={item.id}>
                 <InventoryItem item={item} />
             </li>
         );
@@ -27,7 +28,7 @@ const InventoryAlerts = () => {
     })
     .map((item) => {
         lowStockItems.push(
-            <li key={item.id}>
+            <li className="item" key={item.id}>
                 <InventoryItem item={item} />
             </li>
         );

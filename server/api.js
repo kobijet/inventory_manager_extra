@@ -31,8 +31,9 @@ const UserSchema = zod.object({
 const ItemSchema = zod.object({
     name: zod.string().min(1, { message: 'Item name cannot be empty.' }),
     category: zod.string().min(1, { message: 'Item category cannot be empty.' }),
-    qty: zod.number().positive({ message: 'Quantity cannot be negative.' }),
-    price: zod.number().positive({ message: 'Price cannot be negative.' })
+    qty: zod.number().nonnegative({ message: 'Quantity cannot be negative.' }),
+    qtyres: zod.number().nonnegative({ message: 'Reservations cannot be negative.' }),
+    price: zod.number().nonnegative({ message: 'Price cannot be negative.' })
 });
 
 // Authentication middleware
@@ -100,12 +101,11 @@ api.get("/inventory", checkAuthenticationToken, (req, res) => {
 });
 
 api.post("/inventory", checkAuthenticationToken, verifyAdminRole, (req, res) => {
-
     // Validate that item inputted matches item schema, return error messages otherwise
-    const results = ItemSchema.safeParse(req.body);
-    if (!results.success) {
+    const schema = ItemSchema.safeParse(req.body);
+    if (!schema.success) {
         let errorMessage = "";
-        results.error.errors.map((err) => {
+        schema.error.errors.map((err) => {
             errorMessage += err.message + " ";
         });
         return res.status(401).json({error: errorMessage });
@@ -148,6 +148,36 @@ api.delete("/inventory/:itemId", checkAuthenticationToken, verifyAdminRole, (req
         res.status(200).json({ message: `Item removed: ID: ${matchingItem[0].id}, Name: ${matchingItem[0].name}` }).send();
     });
 });
+
+api.patch("/inventory/:itemId", (req, res) => {
+    db.query("SELECT * FROM inventory", function (err, results, fields) {
+        if (err) res.status(400).json({ error: err });
+
+        // Check that item exists in database
+        const matchingItem = results.filter((item) => {
+            if (item.id.toString() === req.params.itemId)
+            {
+                return item;
+            }
+        });
+        if (matchingItem.length === 0) { return res.status(409).json({ error: "Item does not exist." }); }
+
+        // Validate that item inputted matches item schema, return error messages otherwise
+        const PartialItem = ItemSchema.partial();
+        const schema = PartialItem.safeParse(req.body);
+        console.log(req.body);
+        if (!schema.success) {
+            let errorMessage = "";
+            schema.error.errors.map((err) => {
+                errorMessage += err.message + " ";
+            });
+            return res.status(401).json({error: errorMessage });
+        }
+
+        //db.query(`UPDATE inventory SET name="${req.body.name}", category="${req.body.category}", qty=${req.body.qty}, qtyres=${req.body.qtyres}, price=${req.body.price} WHERE id=${matchingItem[0].id}`);
+        res.status(200).json({ message: `Item updated: ID: ${matchingItem[0].id}` }).send();
+    });
+})
 
 
 

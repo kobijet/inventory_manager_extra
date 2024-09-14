@@ -1,13 +1,17 @@
 const InventoryItem = ({item}) => {
     return (
-        <div className="item">
-            <p className="short-field">{item.id}</p>
-            <p className="long-field">{item.name}</p>
-            <p className="long-field">{item.category}</p>
-            <p className="short-field">{item.qtyres}</p>
-            <p className="short-field">{item.qty}</p>
+        <>
+            <p className="item-id">{item.id}</p>
+            <div className="long-field">
+                <p>{item.name}</p>
+                <p>{item.category}</p>
+            </div>
+            <div className="short-field">
+                <p>{item.qtyres}</p>
+                <p>{item.qty}</p>
+            </div>
             <p className="short-field">${item.price}/ea.</p>
-        </div>
+        </>
     );
 }
 

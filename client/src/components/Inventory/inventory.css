@@ -1,0 +1,40 @@
+/* Inventory component */
+#inventory-component, #inventory-alerts-component {
+    margin-top: 1rem;
+}
+
+#inventory-component h2, #inventory-alerts-component h2, #inventory-alerts-component h3{
+    margin-top: 1rem;
+}
+
+#inventory-component button {
+    border: none;
+    border-radius: 0.15rem;
+}
+
+#inventory-component button:hover {
+    background-color: rgba(145, 145, 145, 0.432);
+}
+
+#inventory-component .item, #inventory-alerts-component .item {
+    display: flex;
+    justify-content: space-between;
+    border: 1px solid rgba(145, 145, 145, 0.432);
+    border-radius: 0.15rem;
+    margin-top: 0.25rem;
+    border-collapse: collapse;
+}
+
+#inventory-component .item-id, #inventory-alerts-component .item-id {
+    min-width: 2rem;
+}
+
+#inventory-component .long-field, #inventory-alerts-component .long-field {
+    flex: 1;
+    min-width: 20rem;
+}
+
+#inventory-component .short-field, #inventory-alerts-component .short-field {
+    flex: 1;
+    min-width: 5rem;
+}

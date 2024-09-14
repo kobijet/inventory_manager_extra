@@ -84,40 +84,6 @@ h3 {
     margin-top: 2rem;
 }
 
-/* Inventory component */
-#inventory-component, #inventory-alerts-component {
-    margin-top: 1rem;
-}
-
-#inventory-component h2, #inventory-alerts-component h2, #inventory-alerts-component h3{
-    margin-top: 1rem;
-}
-
-#inventory-component .item {
-    display: flex;
-}
-
-#inventory-component .item p {
-    align-self: flex-start;
-    flex: 1;
-}
-
-#inventory-component .short-field {
-    flex: 0;
-    min-width: 3rem;
-}
-
-#inventory-component .long-field {
-    flex: 1;
-    min-width: 15rem;
-}
-
-#inventory-component .inventory-header {
-    display: flex;
-    text-align: left;
-    margin-bottom: 1rem;
-}
-
 /* Profile component */
 #profile-component {
     padding-top: 2rem;

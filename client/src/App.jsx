@@ -5,8 +5,8 @@ import { createBrowserRouter, Router, RouterProvider, useLoaderData } from 'reac
 import Login from './pages/Login';
 import Error from './pages/Error';
 import Home from './pages/Home';
-import Inventory from './components/Inventory';
-import InventoryAlerts from './components/InventoryAlerts';
+import Inventory from './components/Inventory/Inventory';
+import InventoryAlerts from './components/Inventory/InventoryAlerts';
 import { inventoryLoader } from './loaders/inventoryLoader';
 import { userLoader } from './loaders/userLoader';
 import Profile from './components/Profile';
