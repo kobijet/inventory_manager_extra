@@ -25,21 +25,16 @@ Project Started: 9-12-2024
 - Separate App.css into individual components
 
 ### Home:
-- Display KPIs
-
-KPIS:
-- Total value: Summation of inventory items' qty x item price
-- Reserved value: Summation of inventory items' reserved qty x item price
-- Available inventory value: Summation of inventory items' (qty available - qty reserved) x item price
-- Out-of-stock rate: # OOS items / Total items * 100
-- Low stock items: # Items below reserved
-- Reserved-to-Available: (Total qty reserved) / (Total qty available - Total qty reserved) * 100
-- Stock coverage: Total qty available / Average reserved
+- Add visualizations for KPIs
 
 ### Inventory:
 **Permissions:** Admin and Editor can edit and remove inventory items
 
-- Delete item, confirm before deletion, authorize deletion
+- Add cost field to inventory items
+- Add feature for customers to order items and update inventory
+- Add feature to receive shipments
+- - JSON input? Excel input? Upload photo and parse table?
+- Fix deleting items; pop-up modal to confirm deletion, jwt authorize deletion
 - Create page to update item quantities en masse
 
 ### Profile:
