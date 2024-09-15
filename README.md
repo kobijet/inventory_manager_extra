@@ -1,20 +1,20 @@
 # Inventory Manager Extra
 ## Details
-Author: Kobi Rogers
+Author: Kobi Rogers 
 Project Started: 9-12-2024
 
 
 ## Test Profiles
 ### Viewer
-**Username:** viewer
+**Username:** viewer 
 **Password:** supersecret1
 
 ### Editor
-**Username:** editor
+**Username:** editor 
 **Password:** supersecret1
 
 ### Admin
-**Username:** kobijet
+**Username:** kobijet 
 **Password:** supersecret1
 
 
