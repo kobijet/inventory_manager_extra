@@ -5,7 +5,7 @@ export const userLoader = async ({params}) => {
 
     const config = {
         headers: {
-            authorization: localStorage.getItem("accessToken")
+            authorization: sessionStorage.getItem("accessToken")
         }
     }
 

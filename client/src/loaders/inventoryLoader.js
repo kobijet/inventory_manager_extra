@@ -3,7 +3,7 @@ import axios from 'axios';
 export async function inventoryLoader() {
     const config = {
         headers: {
-            authorization: localStorage.getItem("accessToken")
+            authorization: sessionStorage.getItem("accessToken")
         }
     }
 

@@ -22,6 +22,7 @@ Project Started: 9-12-2024
 ### General:
 - Page styling
 - Component styling
+- Separate App.css into individual components
 
 ### Home:
 - Display KPIs

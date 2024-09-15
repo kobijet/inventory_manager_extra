@@ -22,6 +22,8 @@ function App() {
     {
       path: "/home",
       element: <Home />,
+      loader: inventoryLoader,
+      errorElement: <Error />,
       children: [
         {
           path: "inventory",

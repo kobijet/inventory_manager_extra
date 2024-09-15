@@ -13,7 +13,7 @@ const NavBar = () => {
                     <li><Link to="inventory/new">New Item</Link></li>
                 </ul>
                 <li><Link to="users/0">Profile</Link></li>
-                <li><Link to="/">Sign Out</Link></li>
+                <li><Link to="/" onClick={() => sessionStorage.clear()}>Sign Out</Link></li>
             </ul>
         </div>
     );

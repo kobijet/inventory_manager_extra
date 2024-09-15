@@ -23,8 +23,9 @@ const Login = () => {
         .then((response) =>{
             // Handle success
             if (response.status === 200) {
-                localStorage.setItem("accessToken", response.data.accessToken);
-                localStorage.setItem("refreshToken", response.data.refreshToken);
+                console.log(typeof(response.data.accessToken));
+                sessionStorage.setItem("accessToken", String(response.data.accessToken));
+                sessionStorage.setItem("refreshToken", String(response.data.refreshToken));
                 navigate("home");
             }
         })

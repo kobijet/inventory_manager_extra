@@ -119,7 +119,21 @@ h3 {
     flex-direction: column;
 }
 
+
+/* Dashboard Component */
 #dashboard-component {
     margin-top: 2rem;
     margin-left: 2rem;
+}
+
+#dashboard-component h2:first-of-type {
+    margin-top: 0rem;
+}
+
+#dashboard-component h2 {
+    margin-top: 1rem;
+}
+
+#dashboard-component #inventory-alerts-component ul {
+    padding-left: 0;
 }
